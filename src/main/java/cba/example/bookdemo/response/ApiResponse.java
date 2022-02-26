@@ -8,12 +8,12 @@ import lombok.Setter;
 
 @Component
 @Getter @Setter @NoArgsConstructor
-public class ResponseBody {
+public class ApiResponse {
 	
 	private int responseCode;
 	private String responseMsg;
 	
-	public ResponseBody(int responseCode, String responseBody) {
+	public ApiResponse(int responseCode, String responseMsg) {
 		
 		this.responseCode = responseCode;
 		this.responseMsg = responseMsg;

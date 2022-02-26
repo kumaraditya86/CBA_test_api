@@ -5,9 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import cba.example.bookdemo.entity.Book;
-import cba.example.bookdemo.response.ResponseBody;
+import cba.example.bookdemo.response.ApiResponse;
 import cba.example.bookdemo.serviceImpl.BookServiceImpl;
 
 @Controller
@@ -17,7 +18,7 @@ public class BookdemoController {
 	@Autowired BookServiceImpl bookService;
 	
 	@PostMapping("/add")
-	public ResponseBody insertNewBook(@RequestBody Book bookDetail) {
+	public @ResponseBody ApiResponse insertNewBook(@RequestBody Book bookDetail) {
 	
 		return bookService.saveBook(bookDetail);
 	}

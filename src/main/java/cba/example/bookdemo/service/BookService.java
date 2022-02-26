@@ -1,11 +1,11 @@
 package cba.example.bookdemo.service;
 
 import cba.example.bookdemo.entity.Book;
-import cba.example.bookdemo.response.ResponseBody;
+import cba.example.bookdemo.response.ApiResponse;
 
 public interface BookService {
 	
-	public ResponseBody saveBook(Book bookDetail);
+	public ApiResponse saveBook(Book bookDetail);
 	
 	
 
