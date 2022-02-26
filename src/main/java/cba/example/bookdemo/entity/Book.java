@@ -35,4 +35,10 @@ public class Book {
 	@Column(name="publication_date")
 	private Date publicationDate;
 
+	public Book(String title, String isbn13, String author, Date publicationDate) {
+		this.title = title;
+		this.author = author;
+		this.isbn13 = isbn13;
+		this.publicationDate = publicationDate;
+	}
 }
