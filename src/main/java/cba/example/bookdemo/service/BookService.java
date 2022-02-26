@@ -6,5 +6,7 @@ import cba.example.bookdemo.response.ResponseBody;
 public interface BookService {
 	
 	public ResponseBody saveBook(Book bookDetail);
+	
+	
 
 }
