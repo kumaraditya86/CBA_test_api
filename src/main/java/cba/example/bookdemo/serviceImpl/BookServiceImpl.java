@@ -34,5 +34,21 @@ public class BookServiceImpl implements BookService {
 		}
 		return new ApiResponse(ConstantMessage.SUCCESS_CODE, ConstantMessage.INSERT_SUCCESS);
 	}
+	
+	@Override
+	public ApiResponse deleteBook(Integer id) {
+		// TODO Auto-generated method stub
+		
+		
+		 if(dbService.findById(id).isPresent()) {
+			 dbService.deleteById(id);
+			 return new ApiResponse(ConstantMessage.SUCCESS_CODE, ConstantMessage.DELETE_SUCCESS);
+		 }else {
+			 return new ApiResponse(ConstantMessage.SUCCESS_CODE, ConstantMessage.DELETE_FAIL);
+		 }
+		 
+		
+	}
 
+	
 }
