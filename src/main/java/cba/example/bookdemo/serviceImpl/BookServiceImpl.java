@@ -24,19 +24,26 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public ApiResponse saveBook(Book bookDetail) {
 		// TODO Auto-generated method stub
-		
+		Book book = null;
+		ApiResponse response = null;
 		try {
 			
-			dbService.save(bookDetail);
+			book = dbService.save(bookDetail);
 			
 		}catch(ConstraintViolationException ex) {
-			return new ApiResponse(ConstantMessage.EXCEPTION_CODE, ConstantMessage.EXCEPTION_MSG);
+			response = new ApiResponse(ConstantMessage.EXCEPTION_CODE, ConstantMessage.EXCEPTION_MSG);
 		}catch(DataIntegrityViolationException ex) {
-			return new ApiResponse(ConstantMessage.EXCEPTION_CODE, ConstantMessage.EXCEPTION_MSG);
+			response = new ApiResponse(ConstantMessage.EXCEPTION_CODE, ConstantMessage.EXCEPTION_MSG);
 		}catch(Exception ex) {
-			return new ApiResponse(ConstantMessage.EXCEPTION_CODE, ex.getClass().toString());
+			response = new ApiResponse(ConstantMessage.EXCEPTION_CODE, ex.getClass().toString());
 		}
-		return new ApiResponse(ConstantMessage.SUCCESS_CODE, ConstantMessage.INSERT_SUCCESS);
+		
+		if(book != null) {
+			response = new ApiResponse(ConstantMessage.SUCCESS_CODE, ConstantMessage.INSERT_SUCCESS);
+		}else {
+			response = new ApiResponse(ConstantMessage.FAIL_CODE, ConstantMessage.INSERT_FAIL);
+		}
+		return response;
 	}
 	
 	@Override
@@ -95,5 +102,6 @@ public class BookServiceImpl implements BookService {
 		return bookList;
 	}
 
+	
 	
 }
