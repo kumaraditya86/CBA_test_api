@@ -1,6 +1,7 @@
 package cba.example.bookdemo.serviceImpl;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.exception.ConstraintViolationException;
@@ -77,6 +78,21 @@ public class BookServiceImpl implements BookService {
 			return new ApiResponse(ConstantMessage.SUCCESS_CODE,ConstantMessage.UPDATE_FAIL);
 		}
 		return new ApiResponse(ConstantMessage.SUCCESS_CODE,ConstantMessage.UPDATE_SUCCESS);
+	}
+
+	@Override
+	public List<Book> searchBook(String title, String author, String isbn13) {
+		// TODO Auto-generated method stub
+		List<Book> bookList = null;
+		if(title != null) {
+			bookList = dbService.findByTitle(title);
+		}else if(author != null) {
+			bookList = dbService.findByAuthor(author);
+		}else if(isbn13 != null) {
+			bookList = dbService.findByIsbn13(isbn13);;
+		}
+		
+		return bookList;
 	}
 
 	
