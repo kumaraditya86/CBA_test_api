@@ -26,7 +26,7 @@ public class BookdemoController {
 	}
 	
 	@DeleteMapping("/remove/{id}")
-	public ApiResponse removeBook(@PathVariable Integer id) {
+	public @ResponseBody ApiResponse removeBook(@PathVariable Integer id) {
 		
 		return bookService.deleteBook(id);
 	}
