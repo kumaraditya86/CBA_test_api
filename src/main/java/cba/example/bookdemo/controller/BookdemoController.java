@@ -28,6 +28,6 @@ public class BookdemoController {
 	@DeleteMapping("/remove/{id}")
 	public ApiResponse removeBook(@PathVariable Integer id) {
 		
-		return null;
+		return bookService.deleteBook(id);
 	}
 }
