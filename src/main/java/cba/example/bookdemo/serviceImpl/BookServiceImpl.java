@@ -18,7 +18,7 @@ import cba.example.bookdemo.service.BookService;
 @Service
 public class BookServiceImpl implements BookService {
 	
-	@Autowired DBOperationRepository dbService;
+	@Autowired private DBOperationRepository dbService;
 	//@Autowired ConstantMessage response;
 
 	@Override
