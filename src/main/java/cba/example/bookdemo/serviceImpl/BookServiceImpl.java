@@ -1,5 +1,8 @@
 package cba.example.bookdemo.serviceImpl;
 
+import java.util.Date;
+import java.util.Optional;
+
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -48,6 +51,32 @@ public class BookServiceImpl implements BookService {
 		 }
 		 
 		
+	}
+
+	@Override
+	public ApiResponse updateBook(Integer id, String title, String author, String isbn13, Date publicationDate) {
+		// TODO Auto-generated method stub
+		Optional<Book> bookDetail = dbService.findById(id); 
+		if(bookDetail.isPresent()) {
+			Book updatedDetail = bookDetail.get();
+			if(title != null) {
+				updatedDetail.setTitle(title);
+			}else if(author != null) {
+				updatedDetail.setAuthor(author);
+			}else if(isbn13 != null) {
+				updatedDetail.setIsbn13(isbn13);;
+			}else if(publicationDate != null) {
+				updatedDetail.setPublicationDate(publicationDate);
+			}
+			
+			Book book = dbService.save(updatedDetail);
+			if(book != null) {
+				return new ApiResponse(ConstantMessage.SUCCESS_CODE,ConstantMessage.UPDATE_SUCCESS);
+			}
+		}else {
+			return new ApiResponse(ConstantMessage.SUCCESS_CODE,ConstantMessage.UPDATE_FAIL);
+		}
+		return new ApiResponse(ConstantMessage.SUCCESS_CODE,ConstantMessage.UPDATE_SUCCESS);
 	}
 
 	
