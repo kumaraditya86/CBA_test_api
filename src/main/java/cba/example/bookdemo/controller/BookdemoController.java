@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cba.example.bookdemo.entity.Book;
 import cba.example.bookdemo.response.ApiResponse;
 import cba.example.bookdemo.serviceImpl.BookServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/book")
+
 public class BookdemoController {
 
 	@Autowired BookServiceImpl bookService;

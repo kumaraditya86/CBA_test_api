@@ -10,13 +10,16 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import cba.example.bookdemo.config.ConstantMessage;
+import cba.example.bookdemo.controller.BookdemoController;
 import cba.example.bookdemo.entity.Book;
 import cba.example.bookdemo.repository.DBOperationRepository;
 import cba.example.bookdemo.response.ApiResponse;
 import cba.example.bookdemo.service.BookService;
 import cba.example.bookdemo.service.Producer;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class BookServiceImpl implements BookService {
 	
 	@Autowired private DBOperationRepository dbService;
