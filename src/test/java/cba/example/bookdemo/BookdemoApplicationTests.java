@@ -23,6 +23,7 @@ import cba.example.bookdemo.config.ConstantMessage;
 import cba.example.bookdemo.entity.Book;
 import cba.example.bookdemo.repository.DBOperationRepository;
 import cba.example.bookdemo.response.ApiResponse;
+import cba.example.bookdemo.service.Producer;
 import cba.example.bookdemo.serviceImpl.BookServiceImpl;
 
 @RunWith(SpringRunner.class)
@@ -32,7 +33,7 @@ class BookdemoApplicationTests {
 	@Autowired
 	private BookServiceImpl bookService;
 	
-	//@Autowired ApiResponse response;
+	@Autowired Producer producer;
 	
 	@MockBean
 	private DBOperationRepository repository;
@@ -48,6 +49,7 @@ class BookdemoApplicationTests {
 		String title = "Test Book4";
 		when(repository.findByTitle(title)).thenReturn(Stream.of(new Book("Test Book 01", "9870123456789", "Test Author", new Date())).collect(Collectors.toList()));
 		assertEquals(1,bookService.searchBook(title,null,null).size());
+		producer.publishToTopic("Test for search book completes.");
 	}
 
 	@Test
@@ -64,12 +66,14 @@ class BookdemoApplicationTests {
 		ApiResponse response = new ApiResponse(ConstantMessage.SUCCESS_CODE, ConstantMessage.INSERT_SUCCESS);
 		when(repository.save(book)).thenReturn(book);
 		assertEquals(response.getResponseCode(), bookService.saveBook(book).getResponseCode());
+		producer.publishToTopic("Test for save book completes.");
 	}
 	
 	@Test
 	public void deleteBookTest() {
 		repository.deleteById(4);
 		verify(repository, atLeastOnce()).deleteById(4);
+		producer.publishToTopic("Test for delete book completes.");
 	}
 	
 	@Test
@@ -88,5 +92,6 @@ class BookdemoApplicationTests {
 		book.setTitle("Test Book9");
 		when(repository.save(book)).thenReturn(book);
 		assertEquals(0,bookService.updateBook(4, "Test Book9", null, null, null).getResponseCode());
+		producer.publishToTopic("Test for update book completes.");
 	}
 }

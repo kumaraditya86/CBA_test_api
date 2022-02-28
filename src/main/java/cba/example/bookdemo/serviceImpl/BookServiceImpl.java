@@ -14,12 +14,13 @@ import cba.example.bookdemo.entity.Book;
 import cba.example.bookdemo.repository.DBOperationRepository;
 import cba.example.bookdemo.response.ApiResponse;
 import cba.example.bookdemo.service.BookService;
+import cba.example.bookdemo.service.Producer;
 
 @Service
 public class BookServiceImpl implements BookService {
 	
 	@Autowired private DBOperationRepository dbService;
-	//@Autowired ConstantMessage response;
+	@Autowired private Producer producer;
 
 	@Override
 	public ApiResponse saveBook(Book bookDetail) {
@@ -43,6 +44,8 @@ public class BookServiceImpl implements BookService {
 		}else {
 			response = new ApiResponse(ConstantMessage.FAIL_CODE, ConstantMessage.INSERT_FAIL);
 		}
+		
+		producer.publishToTopic("Book detail saved for book -"+book.getTitle());
 		return response;
 	}
 	
@@ -53,6 +56,7 @@ public class BookServiceImpl implements BookService {
 		
 		 if(dbService.findById(id).isPresent()) {
 			 dbService.deleteById(id);
+			 producer.publishToTopic("Book recrd deleted for book id-"+id);
 			 return new ApiResponse(ConstantMessage.SUCCESS_CODE, ConstantMessage.DELETE_SUCCESS);
 		 }else {
 			 return new ApiResponse(ConstantMessage.SUCCESS_CODE, ConstantMessage.DELETE_FAIL);
@@ -79,6 +83,7 @@ public class BookServiceImpl implements BookService {
 			
 			Book book = dbService.save(updatedDetail);
 			if(book != null) {
+				producer.publishToTopic("Book detail updated for book -"+book.getTitle());
 				return new ApiResponse(ConstantMessage.SUCCESS_CODE,ConstantMessage.UPDATE_SUCCESS);
 			}
 		}else {
@@ -98,7 +103,7 @@ public class BookServiceImpl implements BookService {
 		}else if(isbn13 != null) {
 			bookList = dbService.findByIsbn13(isbn13);;
 		}
-		
+		producer.publishToTopic("Book detail listed");
 		return bookList;
 	}
 
